@@ -1,0 +1,4 @@
+jasta
+=====
+
+Jabber status bot
