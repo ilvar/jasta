@@ -9,16 +9,16 @@ from bot.config import *
 
 @route('/<jid>.json')
 def status_json(jid):
-    status = Redis().get('status:%s' % jid)
-    show = Redis().get('show:%s' % jid)
-    return dict(status=status, show=show, jid=jid)
+    presence = Redis().hgetall('presence:%s' % jid)
+    presence.update(jid=jid)
+    return presence
 
 @route('/<jid>.html')
 @view('index')
 def status(jid):
-    status = Redis().get('status:%s' % jid)
-    show = Redis().get('show:%s' % jid)
-    return dict(status=status, show=show, jid=jid)
+    presence = Redis().hgetall('presence:%s' % jid)
+    presence.update(jid=jid)
+    return presence
 
 if __name__ == '__main__':
     run(host='localhost', port=5000, debug=DEBUG)

@@ -73,6 +73,5 @@ class Bot:
         show = presence_node.getShow() or 'online'
         status = presence_node.getStatus() or ''
 
-        Redis().set('show:%s' % short_jid, show)
-        Redis().set('status:%s' % short_jid, status)
+        Redis().hmset('presence:%s' % short_jid, {'show': show, 'status': status})
 
