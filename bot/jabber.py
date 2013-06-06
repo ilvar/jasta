@@ -5,14 +5,14 @@ import time
 from redis import Redis
 from xmpp import *
 
-from config import JABBER_HOST, JABBER_USER, JABBER_PASS, DEBUG
+from config import JABBER_HOST, JABBER_PORT, JABBER_USER, JABBER_PASS, DEBUG
 
 class Bot:
     def run(self):
         # Born a client
         self.cl = Client(JABBER_HOST, debug=DEBUG)
 
-        if not self.cl.connect(server=(JABBER_HOST, 5223)):
+        if not self.cl.connect(server=(JABBER_HOST, JABBER_PORT)):
             raise IOError('Can not connect to server.')
 
         # ...authorize client

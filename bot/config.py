@@ -3,6 +3,7 @@ SECRET_KEY = '4444444' # you can never be sure it's random
 DEBUG = False
 
 JABBER_HOST = 'jabber.org'
+JABBER_PORT = 5222
 JABBER_USER = 'some_user'
 JABBER_PASS = 'password'
 
