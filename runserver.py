@@ -3,9 +3,22 @@
 Run development server
 """
 
-import sys
+from bottle import route, view, run
+from redis import Redis
+from bot.config import *
 
-from bot import app
+@route('/<jid>.json')
+def status_json(jid):
+    status = Redis().get('status:%s' % jid)
+    show = Redis().get('show:%s' % jid)
+    return dict(status=status, show=show, jid=jid)
+
+@route('/<jid>.html')
+@view('index')
+def status(jid):
+    status = Redis().get('status:%s' % jid)
+    show = Redis().get('show:%s' % jid)
+    return dict(status=status, show=show, jid=jid)
 
 if __name__ == '__main__':
-    app.run()
+    run(host='localhost', port=5000, debug=DEBUG)
