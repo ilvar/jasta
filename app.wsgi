@@ -10,5 +10,22 @@ if os.path.exists(activate_this):
 os.chdir(os.path.join(os.path.dirname(__file__)))
 
 import bottle
-from runserver import *
-application = bottle.default_app()
+
+from bottle import route, view, run
+from redis import Redis
+from bot.config import *
+
+@route('/<jid>.json')
+def status_json(jid):
+    presence = Redis().hgetall('presence:%s' % jid)
+    presence.update(jid=jid)
+    return presence
+
+@route('/<jid>.html')
+@view('index')
+def status(jid):
+    presence = Redis().hgetall('presence:%s' % jid)
+    presence.update(jid=jid)
+    return presence
+
+application = bottle.app()
