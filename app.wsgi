@@ -9,7 +9,6 @@ if os.path.exists(activate_this):
 
 os.chdir(os.path.join(os.path.dirname(__file__)))
 
-from runserver import *
 import bottle
-
+from runserver import *
 application = bottle.default_app()
