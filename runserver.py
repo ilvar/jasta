@@ -21,4 +21,7 @@ def status(jid):
     return presence
 
 if __name__ == '__main__':
-    run(host='localhost', port=5000, debug=DEBUG)
+    if DEBUG:
+        run(port=80, debug=False, server='fapws3')
+    else:
+        run(host="localhost", port=5000, debug=True)
