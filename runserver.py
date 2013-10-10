@@ -22,6 +22,6 @@ def status(jid):
 
 if __name__ == '__main__':
     if DEBUG:
-        run(port=80, debug=False, server='fapws3')
-    else:
         run(host="localhost", port=5000, debug=True)
+    else:
+        run(port=80, debug=False, server='fapws3')
