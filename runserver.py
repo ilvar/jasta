@@ -10,7 +10,9 @@ from bot.config import *
 
 def get_status(jid):
     presence = Redis().hgetall('presence:%s' % jid) or {}
-    return dict(r=presence and 1 or 0, m=presence.get('status'), s=presence.get('show'))
+    m = presence.get('status') or ''
+    s = presence.get('show') or ''
+    return dict(r=presence and 1 or 0, m=m.encode('utf8'), s=s.encode('utf8'))
 
 @route('/<jid>.json')
 def status_json(jid):
