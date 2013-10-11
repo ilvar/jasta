@@ -2,8 +2,9 @@
 """
 Run development server
 """
+import json
 
-from bottle import route, view, run
+from bottle import route, view, run, response
 from redis import Redis
 
 from bot.config import *
@@ -16,7 +17,9 @@ def get_status(jid):
 
 @route('/<jid>.json')
 def status_json(jid):
-    return get_status(jid)
+    data = get_status(jid)
+    response.content_type = 'application/json'
+    return json.dumps(data, ensure_ascii=False)
 
 @route('/<jid>.txt')
 def status_text(jid):
