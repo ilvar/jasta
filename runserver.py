@@ -12,7 +12,7 @@ def get_status(jid):
     presence = Redis().hgetall('presence:%s' % jid) or {}
     m = presence.get('status') or ''
     s = presence.get('show') or ''
-    return dict(r=presence and 1 or 0, m=m.encode('utf8'), s=s.encode('utf8'))
+    return dict(r=presence and 1 or 0, m=m.decode('utf8'), s=s.decode('utf8'))
 
 @route('/<jid>.json')
 def status_json(jid):
