@@ -19,7 +19,7 @@ def status_json(jid):
 @route('/<jid>.txt')
 def status_text(jid):
     result = get_status(jid)
-    return u'%s|%s|%s' % (result['r'], result['s'], result['m'])
+    return u'%s|%s|%s|\n' % (result['r'], result['s'], result['m'])
 
 @route('/<jid>.html')
 @view('index')
