@@ -5,20 +5,28 @@ Run development server
 
 from bottle import route, view, run
 from redis import Redis
+
 from bot.config import *
+
+def get_status(jid):
+    presence = Redis().hgetall('presence:%s' % jid) or {}
+    return dict(r=presence and 1 or 0, m=presence.get('status'), s=presence.get('show'))
 
 @route('/<jid>.json')
 def status_json(jid):
-    presence = Redis().hgetall('presence:%s' % jid)
-    presence.update(jid=jid)
-    return presence
+    return get_status(jid)
+
+@route('/<jid>.txt')
+def status_text(jid):
+    result = get_status(jid)
+    return u'%s|%s|%s' % (result['r'], result['s'], result['m'])
 
 @route('/<jid>.html')
 @view('index')
 def status(jid):
-    presence = Redis().hgetall('presence:%s' % jid)
-    presence.update(jid=jid)
-    return presence
+    result = get_status(jid)
+    result.update(jid=jid)
+    return result
 
 if __name__ == '__main__':
     if DEBUG:
