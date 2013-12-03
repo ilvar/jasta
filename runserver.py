@@ -2,6 +2,7 @@
 """
 Run development server
 """
+import base64
 import json
 
 from bottle import route, view, run, response
@@ -17,6 +18,13 @@ def get_status(jid):
 
 @route('/<jid>.json')
 def status_json(jid):
+    data = get_status(jid)
+    response.content_type = 'application/json'
+    return json.dumps(data, ensure_ascii=False)
+
+@route('/<b64_jid>.b64.json')
+def status_b64_json(b64_jid):
+    jid = base64.b64decode(b64_jid)
     data = get_status(jid)
     response.content_type = 'application/json'
     return json.dumps(data, ensure_ascii=False)
