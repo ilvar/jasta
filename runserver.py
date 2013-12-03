@@ -16,15 +16,15 @@ def get_status(jid):
     s = presence.get('show') or ''
     return dict(r=presence and 1 or 0, m=m.decode('utf8'), s=s.decode('utf8'))
 
-@route('/<jid>.json')
-def status_json(jid):
+@route('/<b64_jid>.b64.json')
+def status_b64_json(b64_jid):
+    jid = base64.b64decode(b64_jid)
     data = get_status(jid)
     response.content_type = 'application/json'
     return json.dumps(data, ensure_ascii=False)
 
-@route('/<b64_jid>.b64.json')
-def status_b64_json(b64_jid):
-    jid = base64.b64decode(b64_jid)
+@route('/<jid>.json')
+def status_json(jid):
     data = get_status(jid)
     response.content_type = 'application/json'
     return json.dumps(data, ensure_ascii=False)
